@@ -11,7 +11,7 @@ on:
         default: false
   push:
     branches:
-      - 7.2-wip
+      - 7.2
       - 6.18
       - 6.18-test
       - 6.18-display-fix
@@ -34,7 +34,7 @@ jobs:
       - name: Resolve package info
         id: pkg
         run: |
-          if [[ "${{ github.ref_name }}" == "7.2-wip" ]]; then
+          if [[ "${{ github.ref_name }}" == "7.2" ]]; then
             package="linux-nabu-72"
           elif [[ "${{ github.ref_name }}" == "6.18-test" || "${{ github.ref_name }}" == "6.18-display-fix" ]]; then
             package="linux-nabu-618"
@@ -128,7 +128,7 @@ jobs:
               make ARCH=arm64 -j\$(nproc) Image Image.gz modules
               make ARCH=arm64 DTC_FLAGS='-@' dtbs
               make ARCH=arm64 -j\$(nproc) binrpm-pkg
-              cp ~/rpmbuild/RPMS/*/*.rpm /output/ 2>/dev/null || true
+              cp rpmbuild/RPMS/*/*.rpm /output/ 2>/dev/null || true
             "
           echo "::endgroup::"
           ls -la pkg-out/
@@ -160,7 +160,7 @@ jobs:
           branch="${{ github.ref_name }}"
           repo="${{ github.repository }}"
 
-          if [[ "$branch" == "7.2-wip" ]]; then
+          if [[ "$branch" == "7.2" ]]; then
             package="linux-nabu-72"
           elif [[ "$branch" == "6.18-test" || "$branch" == "6.18-display-fix" ]]; then
             package="linux-nabu-618"
